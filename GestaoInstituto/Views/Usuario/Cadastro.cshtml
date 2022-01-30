@@ -1,0 +1,158 @@
+﻿@model Domain.Entity.Usuario
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div class="card card-body">
+
+    <form asp-action="Cadastrar" method="post">
+        <input id="hdfId" type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-row">
+            <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <h4>Usuario</h4>
+                <hr />
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <label asp-for="Nome" class="control-label"></label>
+                <input id="txtNome" asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="form-row">
+            @if (Model.Id == 0)
+            {
+                <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input id="txtEmail" asp-for="Email" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                    <label asp-for="Senha" class="control-label"></label>
+                    <input id="txtSenha" asp-for="Senha" class="form-control" type="password" autocomplete="off" />
+                    <span asp-validation-for="Senha" class="text-danger"></span>
+                </div>
+
+            }
+            else
+            {
+                <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input id="txtEmail" asp-for="Email" class="form-control" disabled="disabled" />
+                    <input type="hidden" asp-for="Email" />
+                </div>
+            }
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <label asp-for="NivelAcesso" class="control-label"></label>
+                <select id="ddlNivel" asp-for="NivelAcesso" class="form-control"></select>
+                <span asp-validation-for="NivelAcesso" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div id="divProdutos" class="card card-body">
+            <div class="row" style="margin-bottom: 40px;">
+
+                <div class="col-12">
+
+                    <select multiple="multiple" asp-for="PaginasId" size="10" id="produtos" name="duallistbox_paginas[]" title="duallistbox_demo1[]" asp-items="@ViewBag.Paginas">
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <input id="btnSalvar" type="button" value="Salvar" class="btn btn-outline-primary" />
+                <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div>
+</div>
+
+
+@section Scripts{
+<script>
+    $(function () {
+
+            //$('select[name="duallistbox_paginas[]"]').bootstrapDualListbox({
+            //    nonSelectedListLabel: 'Páginas',
+            //    selectedListLabel: 'Páginas Selecionadas',
+            //    preserveSelectionOnMove: 'Selecionar',
+            //    moveAllLabel: 'Selecionar todos',
+            //    removeAllLabel: 'Remover todos',
+            //    infoText: 'Exibindo {0}',
+            //    filterPlaceHolder: 'Digite o nome da Páginas',
+            //    infoTextEmpty: 'Nenhuma Páginas encontrada'
+            //});
+
+            $('#btnSalvar').on("click", function () {
+                let paginas = []
+
+                $('select[name="duallistbox_paginas[]"]').val().forEach(function (integrange) {
+                    paginas.push(parseInt(integrange))
+                });
+
+                var objEnvio = {
+                    Id: parseInt($("#hdfId").val()),
+                    //CongregacaoId: "0",
+                    AdministracaoId: parseInt($("#ddlAdministracao").val()),
+                    Nome: $("#txtNome").val(),
+                    Email:$("#txtEmail").val(),
+                    Senha:$("#txtSenha").val() == undefined? "": $("#txtSenha").val(),
+                    ConfirmaSenha: $("#txtConfirmaSenha").val() == undefined? "": $("#txtConfirmaSenha").val(),
+                    Observacao: $("#txtObs").val(),
+                    //Funcao:"0",
+                    Nivel:parseInt($("#ddlNivel").val()),
+                    Admin:$("#ckbAdm").prop('checked')? true: false,
+                    Pesquisar: $("#ckbPesquisa").prop('checked')? true: false,
+                    PaginasId:paginas
+                }
+                console.log("AAA", objEnvio)
+                $.ajax({
+                    url: "@Url.Action("Cadastrar", "Usuario")",
+                    type: "POST",
+                    data: JSON.stringify(objEnvio),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                        $('#modal-integrantes').modal('toggle');
+
+                        swal("Registro Salvo com sucesso!", "", "success");
+                        setInterval(function () {
+
+                            document.location.reload(true);
+                        }, 1000);
+                    },
+                    error: function (ret) {
+                        if (ret.status == 200) {
+                            swal("Registro Salvo com sucesso!", "", "success");
+                            setInterval(function () {
+
+                                window.location.href = "/Usuario"
+                                // document.location.reload(true);
+                            }, 1000);
+                        }
+                        else {
+                            swal("Falha ao gravar registro!", "", "error");
+                        }
+                    }
+                })
+            })
+        })
+</script>
+}

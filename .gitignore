@@ -3,3 +3,8 @@
 ################################################################################
 
 /GestaoInstituto/obj
+/GestaoInstituto/bin/Debug/net6.0
+/Domain/obj
+/Domain/bin/Debug/net6.0
+/Application/obj
+/Application/bin/Debug/net6.0
