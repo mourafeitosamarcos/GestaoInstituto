@@ -8,3 +8,12 @@
 /Domain/bin/Debug/net6.0
 /Application/obj
 /Application/bin/Debug/net6.0
+/.vs/GestaoInstituto/v17
+/src/Application/bin/Debug/net6.0
+/src/Application/obj
+/src/Domain/bin/Debug/net6.0
+/src/Domain/obj
+/src/GestaoInstituto/bin/Debug/net6.0
+/src/GestaoInstituto/obj
+/src/Infra.Data/bin/Debug/net6.0
+/src/Infra.Data/obj
