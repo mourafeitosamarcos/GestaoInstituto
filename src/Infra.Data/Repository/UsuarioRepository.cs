@@ -16,5 +16,10 @@ namespace Infra.Data.Repository
         {
             _context = context;
         }
+
+        public bool ExistLogin(string email)
+        {
+            return _context.Set<Usuario>().Where(usu => usu.Email == email).Any();
+        }
     }
 }

@@ -53,12 +53,17 @@ namespace Infra.Data.Mapping
             // .IsRequired();
 
             builder.Property(c => c.DataInclusao)
-                   .HasColumnName("USUA_DataInclusao")
-                   .HasMaxLength(100);
+                   .HasColumnName("USUA_DataInclusao");
 
             builder.Property(c => c.DataAlteracao)
-                   .HasColumnName("USUA_DataAlteracao")
-                   .HasMaxLength(100);
+                   .HasColumnName("USUA_DataAlteracao");
+
+            builder.Property(c => c.DataExclusao)
+                  .HasColumnName("USUA_DataExclusao");
+
+            builder.Property(c => c.Excluido)
+                 .HasColumnName("USUA_Excluido")
+                 .HasColumnType("BIT");
         }
     }
 }

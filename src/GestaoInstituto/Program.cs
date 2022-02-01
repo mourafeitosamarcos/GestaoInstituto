@@ -1,4 +1,6 @@
 using Application;
+using Domain;
+using FluentValidation.AspNetCore;
 using GestaoInstituto.Filters;
 using Infra.Data;
 using MediatR;
@@ -9,6 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddMvc(setup =>
+{
+    //...mvc setup...
+}).AddFluentValidation();
+
+
+builder.Services.AddDomainSetup();
 builder.Services.AddInfraDataSetup(builder.Configuration);
 builder.Services.AddApplicationSetup();
 

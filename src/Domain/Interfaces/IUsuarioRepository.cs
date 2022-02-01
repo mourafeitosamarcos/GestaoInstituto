@@ -9,5 +9,6 @@ namespace Domain.Interfaces
 {
     public interface IUsuarioRepository : IBaseRepository<Usuario, int>
     {
+        public bool ExistLogin(string email);
     }
 }

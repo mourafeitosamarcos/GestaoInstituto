@@ -15,6 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/plugins/sweetalert2/sweetalert2.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -141,6 +142,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="~/js/adminlte.min.js"></script>
 
+    <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
         @await RenderSectionAsync("Scripts", required: false)
+
+        <script>
+            @if (TempData["msg"] != null)
+        {
+            @Html.Raw(TempData["msg"])
+        }
+        </script>
 </body>
 </html>

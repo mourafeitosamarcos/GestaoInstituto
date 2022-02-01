@@ -19,22 +19,63 @@ namespace GestaoInstituto.Controllers
 
         public IActionResult Cadastro(Usuario usuario)
         {
+            ModelState.Clear();
+            return View(usuario);
+        }
+
+        public IActionResult Editar(Usuario usuario)
+        {
 
             return View(usuario);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Cadastrar([FromBody] Usuario usuario)
+        public async Task<IActionResult> Cadastrar(Usuario usuario)
         {
-            CreateUsuarioCommand createUsuarioCommand = new CreateUsuarioCommand
+            if (usuario.IsValid())
             {
-                Usuario = usuario
-            };
+                if (usuario.Id == 0)
+                {
+                    CreateUsuarioCommand createUsuarioCommand = new()
+                    {
+                        Usuario = usuario
+                    };
 
-            var response = await _mediator.Send(createUsuarioCommand);
+                    var response = await _mediator.Send(createUsuarioCommand);
 
-            return View(response);
+                    response.Switch(us =>
+                    {
+                        ModelState.Clear();
+
+                        usuario = new Usuario();
+
+                    }, error =>
+                    {
+                        TempData["msg"] = @$" Swal.fire(
+                                          '',
+                                          '{error.MessageError}',
+                                          'warning'
+                                        )";
+                    });
+
+                    return View("Cadastro", usuario);
+                }
+                else
+                {
+                    UpdateUsuarioCommand updateUsuarioCommand = new()
+                    {
+                        Usuario = usuario
+                    };
+
+                    var response = await _mediator.Send(updateUsuarioCommand);
+
+                    ModelState.Clear();
+                    return View("Cadastro", new Usuario());
+                }
+            }
+            else
+                return View("Cadastro", usuario);
         }
     }
 }
