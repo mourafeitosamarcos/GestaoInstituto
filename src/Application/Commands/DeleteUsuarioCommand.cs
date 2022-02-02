@@ -1,5 +1,4 @@
 ﻿using Application.Model;
-using Domain.Entity;
 using MediatR;
 using OneOf;
 using System;
@@ -10,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Application.Commands
 {
-    public class CreateUsuarioCommand : IRequest<OneOf<bool, CustomErrors>>
+    public class DeleteUsuarioCommand : IRequest<OneOf<bool, CustomErrors>>
     {
-        public Usuario Usuario { get; set; }
+        public int Id { get; set; }
     }
 }

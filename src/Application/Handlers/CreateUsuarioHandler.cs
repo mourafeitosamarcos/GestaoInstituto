@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers
 {
-    public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, OneOf<Usuario, CustomErrors>>
+    public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, OneOf<bool, CustomErrors>>
     {
         private readonly IUnitOfWork _unitOfWork;
         public CreateUsuarioHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<OneOf<Usuario, CustomErrors>> Handle(CreateUsuarioCommand request, CancellationToken cancellationToken)
+        public async Task<OneOf<bool, CustomErrors>> Handle(CreateUsuarioCommand request, CancellationToken cancellationToken)
         {
             CustomErrors customErrors = new CustomErrors();
             try
@@ -37,10 +37,11 @@ namespace Application.Handlers
 
                 usuario = _unitOfWork.UsuarioRepository.Salvar(request.Usuario);
 
-                return usuario;
+                return true;
             }
             catch (Exception ex)
             {
+                customErrors.MessageError = ex.Message;
                 return customErrors;
             }
             

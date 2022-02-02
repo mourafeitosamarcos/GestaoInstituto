@@ -4,6 +4,20 @@ namespace Domain
 {
     public class Enums
     {
+        public enum NotificationType
+        {
+            swallAlert,
+            toast
+        }
+
+        public enum NotificationMessageType
+        {
+            error,
+            success,
+            warning,
+            info
+        }
+
         public enum StatusUsuario
         {
             [Display(Name = "Ativo")]

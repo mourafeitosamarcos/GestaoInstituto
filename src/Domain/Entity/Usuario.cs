@@ -14,7 +14,7 @@ namespace Domain.Entity
 {
     public class Usuario: BaseEntity
     {
-        public int InstituicaoId { get; set; }
+        public int? InstituicaoId { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
         public string Nome { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
@@ -22,9 +22,9 @@ namespace Domain.Entity
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
         public string Senha { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
-        public int NivelAcesso { get; set; }
+        public int? NivelAcesso { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
-        public int Status { get; set; }
+        public int? Status { get; set; }
 
         [NotMapped]
         public List<int> PaginasId { get; set; }
@@ -44,7 +44,7 @@ namespace Domain.Entity
                 RuleFor(x => x.Nome).MinimumLength(5).WithMessage("Nome pequeno de mais");
                 RuleFor(x => x.Nome).MaximumLength(80).WithMessage("Nome maior do que o permitido");
                 RuleFor(x => x.Email).NotNull().WithMessage("E-mail deve ser informado").EmailAddress().WithMessage("E-mail inválido");
-                RuleFor(x => x.Senha).NotEmpty().MinimumLength(5).WithMessage("Senha pequena de mais");
+               // RuleFor(x => x.Senha).NotEmpty().MinimumLength(5).WithMessage("Senha pequena de mais");
                 RuleFor(x => x.NivelAcesso).NotNull().NotEqual(0).WithMessage("Nível de acesso deve ser informado");
                 RuleFor(x => x.Status).NotNull().NotEqual(0).WithMessage("Status deve ser informado");
             }

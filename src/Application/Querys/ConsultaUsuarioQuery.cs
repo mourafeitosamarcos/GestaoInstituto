@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands
+namespace Application.Querys
 {
-    public class CreateUsuarioCommand : IRequest<OneOf<bool, CustomErrors>>
+    public class ConsultaUsuarioQuery : IRequest<OneOf<Usuario, CustomErrors>>
     {
-        public Usuario Usuario { get; set; }
+        public int UsuarioId { get; set; }
     }
 }

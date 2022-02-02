@@ -8,10 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands
+namespace Application.Querys
 {
-    public class CreateUsuarioCommand : IRequest<OneOf<bool, CustomErrors>>
+    public class ListaUsuarioQuery : IRequest<OneOf<List<Usuario>, CustomErrors>>
     {
-        public Usuario Usuario { get; set; }
     }
 }

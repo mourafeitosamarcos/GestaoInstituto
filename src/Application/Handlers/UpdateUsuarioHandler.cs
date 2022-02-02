@@ -1,8 +1,10 @@
 ﻿using Application.Commands;
+using Application.Model;
 using Domain.Entity;
 using Domain.Service;
 using Domain.UoW;
 using MediatR;
+using OneOf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +13,16 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers
 {
-    internal class UpdateUsuarioHandler : IRequestHandler<UpdateUsuarioCommand, Usuario>
+    internal class UpdateUsuarioHandler : IRequestHandler<UpdateUsuarioCommand, OneOf<bool, CustomErrors>>
     {
         private readonly IUnitOfWork _unitOfWork;
         public UpdateUsuarioHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<Usuario> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
+        public async Task<OneOf<bool, CustomErrors>> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
         {
+            CustomErrors customErrors = new CustomErrors();
             Usuario usuario = _unitOfWork.UsuarioRepository.GetById(request.Usuario.Id);
             try
             {
@@ -32,13 +35,15 @@ namespace Application.Handlers
                     usuario.Senha = UsuarioService.GerarSenha($"{usuario.Email}{usuario.Senha}");
 
                 usuario.DataAlteracao = DateTime.Now;
-                usuario = _unitOfWork.UsuarioRepository.Atualizar(request.Usuario);
+                usuario = _unitOfWork.UsuarioRepository.Atualizar(usuario);
+
+                return true;    
             }
             catch (Exception ex)
             {
-                var rrr = ex;
+                customErrors.MessageError = ex.Message;
+                return customErrors;
             }
-            return usuario;
         }
     }
 }
