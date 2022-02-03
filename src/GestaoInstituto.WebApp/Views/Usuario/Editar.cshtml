@@ -1,0 +1,19 @@
+﻿@model GestaoInstituto.Domain.Entities.Usuario
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+<style>
+.validatorError
+{
+    color:red
+}
+</style>
+<div class="card card-body">
+
+    <form asp-action="Editar" method="post">
+        @Html.Partial("_Formulario", Model);
+    </form>
+
+</div>
+

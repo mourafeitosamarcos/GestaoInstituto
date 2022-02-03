@@ -18,3 +18,11 @@
 /src/Infra.Data/bin/Debug/net6.0
 /src/Infra.Data/obj
 /.vs/GestaoInstituto
+/src/GestaoInstituto.Application/bin/Debug/netcoreapp3.1
+/src/GestaoInstituto.Application/obj
+/src/GestaoInstituto.Domain/bin/Debug/netcoreapp3.1
+/src/GestaoInstituto.Domain/obj
+/src/GestaoInstituto.Infra.Data/obj
+/src/GestaoInstituto.Infra.Data/bin/Debug/netcoreapp3.1
+/src/GestaoInstituto.WebApp/bin/Debug/netcoreapp3.1
+/src/GestaoInstituto.WebApp/obj
