@@ -1,6 +1,5 @@
-﻿
-using GestaoInstituto.Application.Commands.User;
-using GestaoInstituto.Application.Querys.User;
+﻿using GestaoInstituto.Application.Commands.Institution;
+using GestaoInstituto.Application.Querys.Institution;
 using GestaoInstituto.Domain;
 using GestaoInstituto.Domain.Entities;
 using MediatR;
@@ -10,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace GestaoInstituto.WebApp.Controllers
 {
-    public class UsuarioController : BaseController
+    public class InstituicaoController : BaseController
     {
         private readonly IMediator _mediator;
-        public UsuarioController(IMediator mediator)
+        public InstituicaoController(IMediator mediator)
         {
             _mediator = mediator;
         }
         public async Task<IActionResult> Index()
         {
-            List<User> usuarios = new List<User>();
-            ListUserQuery listaUsuarioQuery = new ListUserQuery()
+            List<Institution> institutions = new List<Institution>();
+            ListInstitutionQuery listaUsuarioQuery = new ListInstitutionQuery()
             {
             };
 
@@ -28,32 +27,32 @@ namespace GestaoInstituto.WebApp.Controllers
 
             response.Switch(us =>
             {
-                usuarios = us;
+                institutions = us;
 
             }, error =>
             {
                 Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
             });
 
-            return View(usuarios);
+            return View(institutions);
         }
 
         public IActionResult Cadastro()
         {
-            User usuario = new User();
+            Institution institution = new Institution();
             ModelState.Clear();
-            return View(usuario);
+            return View(institution);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Cadastro(User usuario)
+        public async Task<IActionResult> Cadastro(Institution institution)
         {
-            if (usuario.IsValid())
+            if (institution.IsValid())
             {
-                CreateUserCommand createUsuarioCommand = new CreateUserCommand()
+                CreateInstitutionCommand createUsuarioCommand = new CreateInstitutionCommand()
                 {
-                    User = usuario
+                    Institution = institution
                 };
 
                 var response = await _mediator.Send(createUsuarioCommand);
@@ -62,7 +61,7 @@ namespace GestaoInstituto.WebApp.Controllers
                 {
                     ModelState.Clear();
 
-                    usuario = new User();
+                    institution = new Institution();
 
                     Alert("Registro Salvo com sucesso!", Enums.NotificationMessageType.success, Enums.NotificationType.toast);
 
@@ -71,16 +70,16 @@ namespace GestaoInstituto.WebApp.Controllers
                     Alert(error.MessageError, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
                 });
 
-                return View(usuario);
+                return View(institution);
             }
             else
-                return View(usuario);
+                return View(institution);
         }
 
         public async Task<IActionResult> Editar(int id)
         {
-            User usuario = new User();
-            ConsultUserQuery consultaUsuarioQuery = new ConsultUserQuery()
+            Institution institution = new Institution();
+            ConsultInstitutionQuery consultaUsuarioQuery = new ConsultInstitutionQuery()
             {
                 Id = id
             };
@@ -89,26 +88,26 @@ namespace GestaoInstituto.WebApp.Controllers
 
             response.Switch(us =>
             {
-                usuario = us;
+                institution = us;
 
             }, error =>
             {
                 Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
             });
 
-            return View(usuario);
+            return View(institution);
 
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Editar(User usuario)
+        public async Task<IActionResult> Editar(Institution institution)
         {
-            if (usuario.IsValid())
+            if (institution.IsValid())
             {
-                UpdateUserCommand updateUsuarioCommand = new UpdateUserCommand()
+                UpdateInstitutionCommand updateUsuarioCommand = new UpdateInstitutionCommand()
                 {
-                    User = usuario
+                    Institution = institution
                 };
 
                 var response = await _mediator.Send(updateUsuarioCommand);
@@ -117,7 +116,7 @@ namespace GestaoInstituto.WebApp.Controllers
                 {
                     ModelState.Clear();
 
-                    usuario = new User();
+                    institution = new Institution();
 
                     Alert("Registro Salvo com sucesso!", Enums.NotificationMessageType.success, Enums.NotificationType.toast);
 
@@ -126,11 +125,11 @@ namespace GestaoInstituto.WebApp.Controllers
                     Alert(error.MessageError, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
                 });
 
-                return View(usuario);
+                return View(institution);
 
             }
             else
-                return View(usuario);
+                return View(institution);
         }
 
         public async Task<IActionResult> Excluir(int id)
@@ -138,7 +137,7 @@ namespace GestaoInstituto.WebApp.Controllers
             bool deleteSuccess = false;
             string messageError = string.Empty;
 
-            DeleteUserCommand updateUsuarioCommand = new DeleteUserCommand()
+            DeleteInstitutionCommand updateUsuarioCommand = new DeleteInstitutionCommand()
             {
                 Id = id
             };

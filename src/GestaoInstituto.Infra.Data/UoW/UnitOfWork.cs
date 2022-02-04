@@ -1,8 +1,6 @@
 ﻿using GestaoInstituto.Domain.Interfaces.Repositories;
 using GestaoInstituto.Domain.UoW;
 using GestaoInstituto.Infra.Data.Repositories;
-using System;
-using System.Threading.Tasks;
 
 namespace GestaoInstituto.Infra.Data.UoW
 {
@@ -14,31 +12,35 @@ namespace GestaoInstituto.Infra.Data.UoW
         {
             _context = context;
         }
-        private IUsuarioRepository _usuarioRepository;
 
-        public IUsuarioRepository UsuarioRepository
+        private IUserRepository _userRepository;
+        private IInstitutionRepository _institutionRepository;
+
+        public IUserRepository UserRepository
         {
             get
             {
-                if (_usuarioRepository == null)
+                if (_userRepository == null)
                 {
-                    _usuarioRepository = new UsuarioRepository(_context);
+                    _userRepository = new UserRepository(_context);
                 }
 
-                return _usuarioRepository;
+                return _userRepository;
             }
         }
 
-
-        public async Task<bool> SaveChangesAsync()
+        public IInstitutionRepository InstitutionRepository
         {
-            return await _context.SaveChangesAsync() > 0;
+            get
+            {
+                if (_institutionRepository == null)
+                {
+                    _institutionRepository = new InstitutionRepository(_context);
+                }
+
+                return _institutionRepository;
+            }
         }
 
-        public void Dispose()
-        {
-            _context.Dispose();
-            GC.SuppressFinalize(this);
-        }
     }
 }

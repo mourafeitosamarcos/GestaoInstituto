@@ -2,7 +2,7 @@
 using GestaoInstituto.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using static GestaoInstituto.Domain.Entities.Usuario;
+using static GestaoInstituto.Domain.Entities.User;
 
 namespace GestaoInstituto.Domain
 {
@@ -10,7 +10,7 @@ namespace GestaoInstituto.Domain
     {
         public static IServiceCollection AddDomainSetup(this IServiceCollection services)
         {
-            services.AddTransient<IValidator<Usuario>, UsuarioValidator>();
+            services.AddTransient<IValidator<User>, UserValidator>();
 
             return services;
         }

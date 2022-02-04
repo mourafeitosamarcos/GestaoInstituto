@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 
 namespace GestaoInstituto.Domain.UoW
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
-        IUsuarioRepository UsuarioRepository { get; }
-
-        Task<bool> SaveChangesAsync();
+        IUserRepository UserRepository { get; }
+        IInstitutionRepository InstitutionRepository { get; }
     }
 }

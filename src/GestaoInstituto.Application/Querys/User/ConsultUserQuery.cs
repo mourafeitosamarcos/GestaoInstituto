@@ -5,8 +5,8 @@ using OneOf;
 
 namespace GestaoInstituto.Application.Querys.User
 {
-    public class ConsultUserQuery : IRequest<OneOf<Usuario, CustomErrors>>
+    public class ConsultUserQuery : IRequest<OneOf<Domain.Entities.User, CustomErrors>>
     {
-        public int UsuarioId { get; set; }
+        public int Id { get; set; }
     }
 }

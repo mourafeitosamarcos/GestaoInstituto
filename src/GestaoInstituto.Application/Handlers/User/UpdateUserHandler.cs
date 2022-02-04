@@ -21,19 +21,19 @@ namespace GestaoInstituto.Application.Handlers.User
         public async Task<OneOf<bool, CustomErrors>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             CustomErrors customErrors = new CustomErrors();
-            Usuario usuario = _unitOfWork.UsuarioRepository.GetById(request.Usuario.Id);
+            Domain.Entities.User usuario = _unitOfWork.UserRepository.GetById(request.User.Id);
             try
             {
-                usuario.Nome = request.Usuario.Nome;
-                usuario.Email = request.Usuario.Email;
-                usuario.NivelAcesso = request.Usuario.NivelAcesso;
-                usuario.Status = request.Usuario.Status;
+                usuario.Nome = request.User.Nome;
+                usuario.Email = request.User.Email;
+                usuario.NivelAcesso = request.User.NivelAcesso;
+                usuario.Status = request.User.Status;
 
                 if (!string.IsNullOrEmpty(usuario.Senha))
-                    usuario.Senha = UsuarioService.GerarSenha($"{usuario.Email}{usuario.Senha}");
+                    usuario.Senha = UserService.PasswordEncryption($"{usuario.Email}{usuario.Senha}");
 
                 usuario.DataAlteracao = DateTime.Now;
-                usuario = _unitOfWork.UsuarioRepository.Atualizar(usuario);
+                usuario = _unitOfWork.UserRepository.Update(usuario);
 
                 return true;    
             }

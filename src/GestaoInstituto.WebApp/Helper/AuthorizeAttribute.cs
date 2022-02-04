@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 using System.Linq;
 
 namespace GestaoInstituto.WebApp.Helper
@@ -18,7 +19,7 @@ namespace GestaoInstituto.WebApp.Helper
     }
     public class AuthorizeAttribute : IAuthorizationFilter
     {
-        public static Usuario UsuarioLogado { get; set; }
+        public static User User { get; set; }
         //public static List<Pagina> PaginasLiberadas { get; set; }
         //public string _permissoes { get; set; }
 
@@ -31,9 +32,9 @@ namespace GestaoInstituto.WebApp.Helper
         {
             if (context.HttpContext.User.Claims.Count() > 0)
             {
-                //var NivelAcesso = context.HttpContext.User.Claims.Where(c => c.Type == "NivelAcesso").Select(c => c.Value).FirstOrDefault();
-                //var Permissoes = context.HttpContext.User.Claims.Where(c => c.Type == "Permissoes").Select(c => c.Value).FirstOrDefault();
-                //UsuarioLogado = JsonConvert.DeserializeObject<Usuario>(context.HttpContext.User.Claims.Where(c => c.Type == "UsuarioLogado").Select(c => c.Value).FirstOrDefault());
+                var NivelAcesso = context.HttpContext.User.Claims.Where(c => c.Type == "NivelAcesso").Select(c => c.Value).FirstOrDefault();
+                var Permissoes = context.HttpContext.User.Claims.Where(c => c.Type == "Permissoes").Select(c => c.Value).FirstOrDefault();
+                User = JsonConvert.DeserializeObject<User>(context.HttpContext.User.Claims.Where(c => c.Type == "UsuarioLogado").Select(c => c.Value).FirstOrDefault());
                 //PaginasLiberadas = JsonConvert.DeserializeObject<List<Pagina>>(context.HttpContext.User.Claims.Where(c => c.Type == "Paginas").Select(c => c.Value).FirstOrDefault());
                 //Enum.TryParse<Roles>(NivelAcesso, out _roleAcesso);
 

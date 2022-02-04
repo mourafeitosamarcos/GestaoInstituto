@@ -3,9 +3,9 @@ using System.Text;
 
 namespace GestaoInstituto.Domain.Services
 {
-    public class UsuarioService
+    public class UserService
     {
-        public static string GerarSenha(string passText)
+        public static string PasswordEncryption(string passText)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
 

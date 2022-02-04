@@ -26,3 +26,9 @@
 /src/GestaoInstituto.Infra.Data/bin/Debug/netcoreapp3.1
 /src/GestaoInstituto.WebApp/bin/Debug/netcoreapp3.1
 /src/GestaoInstituto.WebApp/obj
+/src/GestaoInstituto.Application/bin/Release/netcoreapp3.1
+/src/GestaoInstituto.Domain/bin/Release/netcoreapp3.1
+/src/GestaoInstituto.Infra.Data/bin/Release/netcoreapp3.1
+/src/GestaoInstituto.WebApp/.config
+/src/GestaoInstituto.WebApp/bin/Release/netcoreapp3.1
+/src/GestaoInstituto.WebApp/Properties/PublishProfiles

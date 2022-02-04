@@ -1,5 +1,8 @@
-﻿using GestaoInstituto.Domain.Entities;
+﻿using GestaoInstituto.Application.Querys.User;
+using GestaoInstituto.Domain;
+using GestaoInstituto.Domain.Entities;
 using GestaoInstituto.WebApp.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +14,17 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace GestaoInstituto.Controllers
+namespace GestaoInstituto.WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IMediator _mediator;
+        bool _isAuth = false;
+        public HomeController(ILogger<HomeController> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
         public IActionResult Index()
@@ -31,40 +36,38 @@ namespace GestaoInstituto.Controllers
         [HttpPost]
         public async Task<IActionResult> Index([Bind] string email, string senha)
         {
+
             if (ModelState.IsValid)
             {
-                Usuario usuarioLogado = new Usuario
+
+                AuthenticateUserQuery authenticateUserQuery = new AuthenticateUserQuery()
                 {
                     Email = email,
-                    Senha = senha,
-                    Nome = "",
-                    Id = 1,
-                    NivelAcesso = 1
+                    Senha = senha
                 };
 
-                if (usuarioLogado != null)
-                {
-                    await AuthUser(usuarioLogado);
-                }
+                var response = await _mediator.Send(authenticateUserQuery);
+
+                response.Switch(async us => await AuthUser(us), error => Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast));
+
+                if (_isAuth)
+                    return RedirectToAction("Index", "Dashboard");
                 else
-                {
-                    //int.TryParse(_configuration["idConfiguracao"], out int idConfiguracao);
-
-                    //Configuracao configuracao = _configuracaoApp.BuscaId(idConfiguracao);
-
-                    //ViewBag.ConfiguracaoNomeSistema = configuracao == null ? "Gestão de Igrejas" : configuracao.NomeExibicao;
-                    //ViewBag.ConfiguracaoLogoTipo = configuracao == null ? "" : configuracao.LogTipo;
-
-                    //Toastr("O login Falhou. Informe as credenciais corretas", Domain.Enums.NotificationType.warning);
                     return View("index");
-                }
+
+
             }
             else
             {
+                Alert("Usuário e/ou senha incorretos", Enums.NotificationMessageType.error, Enums.NotificationType.toast);
                 return View("index");
             }
+        }
 
-            return RedirectToAction("Index", "Dashboard");
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -74,7 +77,7 @@ namespace GestaoInstituto.Controllers
         }
 
 
-        private async Task AuthUser(Usuario usuario)
+        private async Task AuthUser(User usuario)
         {
             var claims = new List<Claim>
 {
@@ -96,6 +99,8 @@ namespace GestaoInstituto.Controllers
                     IsPersistent = true,
                     AllowRefresh = false
                 });
+
+            _isAuth = true;
         }
     }
 }

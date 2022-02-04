@@ -11,7 +11,8 @@ namespace GestaoInstituto.Infra.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UsuarioMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new InstitutionMap());
         }
 
     }

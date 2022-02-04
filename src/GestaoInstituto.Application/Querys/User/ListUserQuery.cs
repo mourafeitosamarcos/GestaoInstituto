@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace GestaoInstituto.Application.Querys.User
 {
-    public class ListUserQuery : IRequest<OneOf<List<Usuario>, CustomErrors>>
+    public class ListUserQuery : IRequest<OneOf<List<Domain.Entities.User>, CustomErrors>>
     {
     }
 }

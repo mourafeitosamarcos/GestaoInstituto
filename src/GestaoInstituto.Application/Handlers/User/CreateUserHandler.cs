@@ -24,17 +24,17 @@ namespace GestaoInstituto.Application.Handlers.User
             CustomErrors customErrors = new CustomErrors();
             try
             {
-                if (_unitOfWork.UsuarioRepository.ExistLogin(request.Usuario.Email))
+                if (_unitOfWork.UserRepository.IsExist(request.User.Email))
                 {
                     customErrors.MessageError = "Usuário já Cadastrado";
                     return customErrors;
                 }
 
-                Usuario usuario = new Usuario();
-                request.Usuario.Senha = UsuarioService.GerarSenha($"{request.Usuario.Email}{request.Usuario.Senha}");
-                request.Usuario.DataInclusao = DateTime.Now;
+                Domain.Entities.User usuario = new Domain.Entities.User();
+                request.User.Senha = UserService.PasswordEncryption($"{request.User.Email}{request.User.Senha}");
+                request.User.DataInclusao = DateTime.Now;
 
-                usuario = _unitOfWork.UsuarioRepository.Salvar(request.Usuario);
+                usuario = _unitOfWork.UserRepository.Save(request.User);
 
                 return true;
             }

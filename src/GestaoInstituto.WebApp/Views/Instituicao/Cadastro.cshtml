@@ -1,4 +1,4 @@
-﻿@model GestaoInstituto.Domain.Entities.User
+﻿@model GestaoInstituto.Domain.Entities.Institution
 
 @{
     ViewData["Title"] = "Cadastro";
@@ -11,7 +11,7 @@
 </style>
 <div class="card card-body">
 
-    <form asp-action="Editar" method="post">
+    <form asp-action="Cadastro" method="post">
         @Html.Partial("_Formulario", Model);
     </form>
 

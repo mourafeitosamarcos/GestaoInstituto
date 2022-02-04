@@ -10,8 +10,8 @@ namespace GestaoInstituto.Domain.Interfaces.Repositories
     {
         T GetById(TId id);
         IList<T> GetAll();
-        T Salvar(T t);
-        T Atualizar(T t);
-        T Deletar(TId id);
+        T Save(T t);
+        T Update(T t);
+        T Delete(TId id);
     }
 }

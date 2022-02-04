@@ -24,7 +24,7 @@ namespace GestaoInstituto.Application.Handlers.User
             CustomErrors customErrors = new CustomErrors();
             try
             {
-                Usuario usuario = _unitOfWork.UsuarioRepository.GetById(request.Id);
+                Domain.Entities.User usuario = _unitOfWork.UserRepository.GetById(request.Id);
 
                 if(usuario == null)
                 {
@@ -32,7 +32,10 @@ namespace GestaoInstituto.Application.Handlers.User
                     return customErrors;
                 }
 
-                _unitOfWork.UsuarioRepository.Deletar(usuario.Id);
+                usuario.DataExclusao = DateTime.Now;
+                usuario.Excluido = true;
+
+                _unitOfWork.UserRepository.Update(usuario);
 
                 return true;
             }

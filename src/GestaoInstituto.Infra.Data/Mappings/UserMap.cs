@@ -7,48 +7,37 @@ using System.Text;
 
 namespace GestaoInstituto.Infra.Data.Mappings
 {
-    internal class UsuarioMap : IEntityTypeConfiguration<Usuario>
+    internal class UserMap : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Usuario> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("TB_Usuario");
 
             builder.Property(c => c.Id).ValueGeneratedOnAdd()
                 .HasColumnName("USUA_Id");
-            // .IsRequired();
-
 
             builder.Property(c => c.InstituicaoId)
                    .HasColumnName("USUA_INST_Id");
-            //.IsRequired();
 
             builder.Property(c => c.Nome)
                    .HasColumnName("USUA_Nome")
                    .HasMaxLength(100);
-            ///.IsRequired();
 
             builder.Property(c => c.Email)
                    .HasColumnName("USUA_Email")
                    .HasMaxLength(100);
-            // .IsRequired();
-
 
             builder.Property(c => c.Senha)
                    .HasColumnName("USUA_Senha")
                    .HasMaxLength(100);
-            // .IsRequired();
-
 
             builder.Property(c => c.NivelAcesso)
                    .HasColumnName("USUA_Nivel")
                    .HasMaxLength(100);
-            // .IsRequired();
-
 
             builder.Property(c => c.Status)
                    .HasColumnName("USUA_Status")
                    .HasMaxLength(100);
-            // .IsRequired();
 
             builder.Property(c => c.DataInclusao)
                    .HasColumnName("USUA_DataInclusao");

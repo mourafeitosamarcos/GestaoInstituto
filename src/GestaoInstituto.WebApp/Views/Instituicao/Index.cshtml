@@ -1,8 +1,8 @@
-﻿@model IEnumerable<GestaoInstituto.Domain.Entities.User>
+﻿@model IEnumerable<GestaoInstituto.Domain.Entities.Institution>
 
 
 <p>
-    <a asp-action="Cadastro" class="btn btn-outline-primary">Novo Usuário</a>
+    <a asp-action="Cadastro" class="btn btn-outline-primary">Nova Instituição</a>
 </p>
 
 <div class="card card-body">
@@ -19,10 +19,6 @@
 
                     <th>
                         @Html.DisplayNameFor(model => model.Email)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.NivelAcesso)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Status)
@@ -43,10 +39,6 @@
 
                         <td>
                             @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NivelAcesso)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
@@ -89,7 +81,7 @@
       confirmButtonText: 'Sim'
     }).then((result) => {
       if (result.isConfirmed) {
-            $.get("@Url.Action("Excluir", "Usuario")?id=" + id, function (data) {
+            $.get("@Url.Action("Excluir", "Instituicao")?id=" + id, function (data) {
                 
                  Swal.fire(
                   '',

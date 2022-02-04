@@ -7,6 +7,6 @@ namespace GestaoInstituto.Application.Commands.User
 {
     public class UpdateUserCommand : IRequest<OneOf<bool, CustomErrors>>
     {
-        public Usuario Usuario { get; set; }
+        public Domain.Entities.User User { get; set; }
     }
 }

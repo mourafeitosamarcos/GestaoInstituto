@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GestaoInstituto.Application.Handlers.User
 {
-    public class ListUserHandler : IRequestHandler<ListUserQuery, OneOf<List<Usuario>, CustomErrors>>
+    public class ListUserHandler : IRequestHandler<ListUserQuery, OneOf<List<Domain.Entities.User>, CustomErrors>>
     {
         private readonly IUnitOfWork _unitOfWork;
         public ListUserHandler(IUnitOfWork unitOfWork)
@@ -20,12 +20,12 @@ namespace GestaoInstituto.Application.Handlers.User
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<OneOf<List<Usuario>, CustomErrors>> Handle(ListUserQuery request, CancellationToken cancellationToken)
+        public async Task<OneOf<List<Domain.Entities.User>, CustomErrors>> Handle(ListUserQuery request, CancellationToken cancellationToken)
         {
             CustomErrors customErrors = new CustomErrors();
             try
             {
-                List<Usuario> usuarios = _unitOfWork.UsuarioRepository.GetAll().ToList();
+                List<Domain.Entities.User> usuarios = _unitOfWork.UserRepository.GetAll().ToList();
                 return usuarios;
             }
             catch (Exception ex)
