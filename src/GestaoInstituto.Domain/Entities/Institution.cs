@@ -8,8 +8,9 @@ using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace GestaoInstituto.Domain.Entities
 {
-    public class Institution: BaseEntity
+    public class Institution : BaseEntity
     {
+        public virtual int AdministracaoId { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
         public string Nome { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
@@ -17,6 +18,10 @@ namespace GestaoInstituto.Domain.Entities
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
         public int Status { get; set; }
 
+
+        public virtual DateTime? DataInclusao { get; set; }
+        public virtual DateTime? DataAlteracao { get; set; }
+        public virtual DateTime? DataExclusao { get; set; }
         [NotMapped]
         public ValidationResult validationResult { get; set; }
 

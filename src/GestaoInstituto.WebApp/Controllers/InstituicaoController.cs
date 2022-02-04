@@ -1,10 +1,13 @@
 ﻿using GestaoInstituto.Application.Commands.Institution;
+using GestaoInstituto.Application.Querys.Administration;
 using GestaoInstituto.Application.Querys.Institution;
 using GestaoInstituto.Domain;
 using GestaoInstituto.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GestaoInstituto.WebApp.Controllers
@@ -37,10 +40,25 @@ namespace GestaoInstituto.WebApp.Controllers
             return View(institutions);
         }
 
-        public IActionResult Cadastro()
+        public async Task<IActionResult> Cadastro()
         {
             Institution institution = new Institution();
             ModelState.Clear();
+
+            ListAdministrationQuery listAdministrationQuery = new ListAdministrationQuery()
+            {
+            };
+
+            var response = await _mediator.Send(listAdministrationQuery);
+
+            response.Switch(adms =>
+            {
+                ViewBag.Administations = adms.Select(c => new SelectListItem() { Text = c.Nome, Value = c.Id.ToString() })
+                                                             .ToList().OrderBy(ord => ord.Text);
+
+            }, error =>
+            {
+            });
             return View(institution);
         }
 

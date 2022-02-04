@@ -26,7 +26,7 @@ namespace GestaoInstituto.Application.Handlers.Institution
             {
                 request.Institution.DataInclusao = DateTime.Now;
 
-                _unitOfWork.InstitutionRepository.Update(request.Institution);
+                _unitOfWork.InstitutionRepository.Save(request.Institution);
 
                 return true;
             }

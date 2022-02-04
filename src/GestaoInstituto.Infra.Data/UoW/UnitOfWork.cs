@@ -15,6 +15,7 @@ namespace GestaoInstituto.Infra.Data.UoW
 
         private IUserRepository _userRepository;
         private IInstitutionRepository _institutionRepository;
+        private IAdministrationRepository _administrationRepository;
 
         public IUserRepository UserRepository
         {
@@ -39,6 +40,19 @@ namespace GestaoInstituto.Infra.Data.UoW
                 }
 
                 return _institutionRepository;
+            }
+        }
+
+        public IAdministrationRepository AdministrationRepository
+        {
+            get
+            {
+                if (_administrationRepository == null)
+                {
+                    _administrationRepository = new AdministrationRepository(_context);
+                }
+
+                return _administrationRepository;
             }
         }
 

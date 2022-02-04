@@ -16,6 +16,9 @@ namespace GestaoInstituto.Infra.Data.Mappings
             builder.Property(c => c.Id).ValueGeneratedOnAdd()
                 .HasColumnName("INST_Id");
 
+            builder.Property(c => c.AdministracaoId)
+                 .HasColumnName("INST_ADM_Id");
+
             builder.Property(c => c.Nome)
                    .HasColumnName("INST_Nome")
                    .HasMaxLength(80);
@@ -35,7 +38,7 @@ namespace GestaoInstituto.Infra.Data.Mappings
                    .HasColumnName("INST_DataAlteracao");
 
             builder.Property(c => c.DataExclusao)
-                  .HasColumnName("INST_DataAlteracao");
+                  .HasColumnName("INST_DataExclusao");
 
             builder.Property(c => c.Excluido)
                  .HasColumnName("INST_Excluido");

@@ -13,6 +13,7 @@ namespace GestaoInstituto.Infra.Data
         {
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new InstitutionMap());
+            modelBuilder.ApplyConfiguration(new AdministrationMap());
         }
 
     }
