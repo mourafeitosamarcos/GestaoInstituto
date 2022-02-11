@@ -9,5 +9,8 @@ namespace GestaoInstituto.Domain.UoW
         IUserRepository UserRepository { get; }
         IInstitutionRepository InstitutionRepository { get; }
         IAdministrationRepository AdministrationRepository { get; }
+        IPageRepository PageRepository { get; }
+        IUserPageRepository UserPageRepository { get; }
+        IUserAdministrationRepository UserAdministrationRepository { get; }
     }
 }

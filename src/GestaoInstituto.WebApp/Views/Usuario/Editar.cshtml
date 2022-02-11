@@ -4,16 +4,88 @@
     ViewData["Title"] = "Cadastro";
 }
 <style>
-.validatorError
-{
-    color:red
-}
+    .validatorError {
+        color: red
+    }
 </style>
 <div class="card card-body">
 
     <form asp-action="Editar" method="post">
-        @Html.Partial("_Formulario", Model);
+        <partial name="_Formulario.cshtml" />
     </form>
 
 </div>
 
+@section Scripts{
+<script>
+
+      $(function () {
+          $( "#acessos" ).on('shown', function(){
+              $("#lblLoad").hide();
+              $("#divBotoes").show();
+        });
+           $('#btnGravaAcessos').on("click", function () {
+               $("#lblLoad").show();
+               $("#divBotoes").hide();
+                let paginaIds = []
+                let administracaoIds =[]
+
+                $('select[name="duallistbox_paginas[]"]').val().forEach(function (pag) {
+                    paginaIds.push(parseInt(pag))
+                });
+
+                $("#ddlAdministracao").val().forEach(function (adm) {
+                    administracaoIds.push(parseInt(adm))
+                });
+
+               var objEnvio = {
+                    UserId : parseInt($("#hdfId").val()),
+                    AdministrationIds:administracaoIds ,
+                    PageIds:paginaIds
+                }
+
+                $.ajax({
+                    url: "@Url.Action("Autorizar", "Usuario")",
+                    type: "POST",
+                    data: JSON.stringify(objEnvio),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                        $('#acessos').modal('toggle');
+                       $("#lblLoad").hide();
+              $("#divBotoes").show();
+                        Swal.fire("", "Registro Salvo com sucesso!", "success");
+
+                        //setInterval(function () {
+                        //    document.location.reload(true);
+                        //}, 1000);
+                    },
+                    error: function (ret) {
+                         $('#acessos').modal('toggle');
+                       $("#lblLoad").hide();
+              $("#divBotoes").show();
+                        if (ret.status == 200) {
+                           Swal.fire("", "Registro Salvo com sucesso!", "success");
+                            //setInterval(function () {
+                            //    window.location.href = "/Usuario"
+                            //}, 1000);
+                        }
+                        else {
+                            Swal.fire("","Falha ao gravar registro!","error");
+                        }
+                    }
+                })
+           });
+            $('select[name="duallistbox_paginas[]"]').bootstrapDualListbox({
+                nonSelectedListLabel: 'Páginas',
+                selectedListLabel: 'Páginas Selecionadas',
+                preserveSelectionOnMove: 'Selecionar',
+                moveAllLabel: 'Selecionar todos',
+                removeAllLabel: 'Remover todos',
+                infoText: 'Exibindo {0}',
+                filterPlaceHolder: 'Digite o nome da Páginas',
+                infoTextEmpty: 'Nenhuma Páginas encontrada'
+            });
+    })
+</script>
+}

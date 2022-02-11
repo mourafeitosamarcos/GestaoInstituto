@@ -1,9 +1,14 @@
-﻿
-using GestaoInstituto.Application.Commands.User;
-using GestaoInstituto.Application.Querys.Administration;
-using GestaoInstituto.Application.Querys.User;
+﻿using GestaoInstituto.Application.Commands.User.AuthorizationUser;
+using GestaoInstituto.Application.Commands.User.DeleteUser;
+using GestaoInstituto.Application.Commands.User.UpdateUser;
+using GestaoInstituto.Application.Handlers.User.CreateUser;
+using GestaoInstituto.Application.Querys.Administration.ListAdministration;
+using GestaoInstituto.Application.Querys.Page.ListPage;
+using GestaoInstituto.Application.Querys.User.ConsultUser;
+using GestaoInstituto.Application.Querys.User.ListUser;
 using GestaoInstituto.Domain;
 using GestaoInstituto.Domain.Entities;
+using GestaoInstituto.WebApp.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,11 +36,11 @@ namespace GestaoInstituto.WebApp.Controllers
 
             response.Switch(us =>
             {
-                usuarios = us;
+                usuarios = us.Users;
 
             }, error =>
             {
-                Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
+                Alert(error, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
             });
 
             return View(usuarios);
@@ -46,20 +51,7 @@ namespace GestaoInstituto.WebApp.Controllers
             User usuario = new User();
             ModelState.Clear();
 
-            ListAdministrationQuery listAdministrationQuery = new ListAdministrationQuery()
-            {
-            };
-
-            var response = await _mediator.Send(listAdministrationQuery);
-
-            response.Switch(adms =>
-            {
-                ViewBag.Administations = adms.Select(c => new SelectListItem() { Text = c.Nome, Value = c.Id.ToString() })
-                                                             .ToList().OrderBy(ord => ord.Text);
-
-            }, error =>
-            {
-            });
+            await LoadViewBag();
 
             return View(usuario);
         }
@@ -87,7 +79,7 @@ namespace GestaoInstituto.WebApp.Controllers
 
                 }, error =>
                 {
-                    Alert(error.MessageError, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
+                    Alert(error, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
                 });
 
                 return View(usuario);
@@ -98,7 +90,10 @@ namespace GestaoInstituto.WebApp.Controllers
 
         public async Task<IActionResult> Editar(int id)
         {
+            await LoadViewBag();
+
             User usuario = new User();
+
             ConsultUserQuery consultaUsuarioQuery = new ConsultUserQuery()
             {
                 Id = id
@@ -108,11 +103,11 @@ namespace GestaoInstituto.WebApp.Controllers
 
             response.Switch(us =>
             {
-                usuario = us;
+                usuario = us.User;
 
             }, error =>
             {
-                Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
+                Alert(error, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
             });
 
             return View(usuario);
@@ -142,7 +137,7 @@ namespace GestaoInstituto.WebApp.Controllers
 
                 }, error =>
                 {
-                    Alert(error.MessageError, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
+                    Alert(error, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
                 });
 
                 return View(usuario);
@@ -168,13 +163,74 @@ namespace GestaoInstituto.WebApp.Controllers
                 deleteSuccess = true;
             }, error =>
             {
-                messageError = error.MessageError;
+                messageError = error;
             });
 
             if (deleteSuccess)
                 return Ok();
             else
                 return BadRequest(messageError);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Autorizar([FromBody] UserAutorizeViewModel userAutorizeViewModel)
+        {
+            bool AuthotizationSuccess = false;
+            string messageError = string.Empty;
+
+            AuthorizationUserCommand authorizationUserCommand = new AuthorizationUserCommand()
+            {
+                UserId = userAutorizeViewModel.UserId,
+                AdministrationIds = userAutorizeViewModel.AdministrationIds,
+                PageIds = userAutorizeViewModel.PageIds,
+            };
+
+            var response = await _mediator.Send(authorizationUserCommand);
+            response.Switch(us =>
+            {
+                AuthotizationSuccess = true;
+            }, error =>
+            {
+                messageError = error;
+            });
+
+            if (AuthotizationSuccess)
+                return Ok();
+            else
+                return BadRequest(messageError);
+        }
+
+        private async Task LoadViewBag()
+        {
+            ListAdministrationQuery listAdministrationQuery = new ListAdministrationQuery()
+            {
+            };
+
+            var responseAdministration = await _mediator.Send(listAdministrationQuery);
+
+            responseAdministration.Switch(adms =>
+            {
+                ViewBag.Administations = adms.Administrations.Select(c => new SelectListItem() { Text = c.Nome, Value = c.Id.ToString() })
+                                                             .ToList().OrderBy(ord => ord.Text);
+
+            }, error =>
+            {
+            });
+
+
+            ListPageQuery listPageQuery = new ListPageQuery();
+            
+
+            var responsePage = await _mediator.Send(listPageQuery);
+
+            responsePage.Switch(adms =>
+            {
+                ViewBag.Pages = adms.Pages.Select(c => new SelectListItem() { Text = c.Nome, Value = c.Id.ToString() })
+                                                             .ToList().OrderBy(ord => ord.Text);
+
+            }, error =>
+            {
+            });
         }
     }
 }

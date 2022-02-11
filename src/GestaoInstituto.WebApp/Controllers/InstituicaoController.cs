@@ -1,6 +1,9 @@
-﻿using GestaoInstituto.Application.Commands.Institution;
-using GestaoInstituto.Application.Querys.Administration;
-using GestaoInstituto.Application.Querys.Institution;
+﻿using GestaoInstituto.Application.Commands.Institution.DeleteInstitution;
+using GestaoInstituto.Application.Commands.Institution.UpdateInstitutions;
+using GestaoInstituto.Application.Handlers.Institution.CreateInstitution;
+using GestaoInstituto.Application.Querys.Administration.ListAdministration;
+using GestaoInstituto.Application.Querys.Institution.ConsultInstitutionQuery;
+using GestaoInstituto.Application.Querys.Institution.ListInstitution;
 using GestaoInstituto.Domain;
 using GestaoInstituto.Domain.Entities;
 using MediatR;
@@ -19,6 +22,7 @@ namespace GestaoInstituto.WebApp.Controllers
         {
             _mediator = mediator;
         }
+
         public async Task<IActionResult> Index()
         {
             List<Institution> institutions = new List<Institution>();
@@ -30,11 +34,11 @@ namespace GestaoInstituto.WebApp.Controllers
 
             response.Switch(us =>
             {
-                institutions = us;
+                institutions = us.Institutions;
 
             }, error =>
             {
-                Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
+                Alert(error, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
             });
 
             return View(institutions);
@@ -53,7 +57,7 @@ namespace GestaoInstituto.WebApp.Controllers
 
             response.Switch(adms =>
             {
-                ViewBag.Administations = adms.Select(c => new SelectListItem() { Text = c.Nome, Value = c.Id.ToString() })
+                ViewBag.Administations = adms.Administrations.Select(c => new SelectListItem() { Text = c.Nome, Value = c.Id.ToString() })
                                                              .ToList().OrderBy(ord => ord.Text);
 
             }, error =>
@@ -85,7 +89,7 @@ namespace GestaoInstituto.WebApp.Controllers
 
                 }, error =>
                 {
-                    Alert(error.MessageError, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
+                    Alert(error, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
                 });
 
                 return View(institution);
@@ -106,11 +110,11 @@ namespace GestaoInstituto.WebApp.Controllers
 
             response.Switch(us =>
             {
-                institution = us;
+                institution = us.Institution;
 
             }, error =>
             {
-                Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
+                Alert(error, Enums.NotificationMessageType.error, Enums.NotificationType.toast);
             });
 
             return View(institution);
@@ -140,7 +144,7 @@ namespace GestaoInstituto.WebApp.Controllers
 
                 }, error =>
                 {
-                    Alert(error.MessageError, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
+                    Alert(error, Enums.NotificationMessageType.warning, Enums.NotificationType.toast);
                 });
 
                 return View(institution);
@@ -166,7 +170,7 @@ namespace GestaoInstituto.WebApp.Controllers
                 deleteSuccess = true;
             }, error =>
             {
-                messageError = error.MessageError;
+                messageError = error;
             });
 
             if (deleteSuccess)

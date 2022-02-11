@@ -1,4 +1,5 @@
 ﻿using GestaoInstituto.Application.Querys.User;
+using GestaoInstituto.Application.Querys.User.AuthenticateUser;
 using GestaoInstituto.Domain;
 using GestaoInstituto.Domain.Entities;
 using GestaoInstituto.WebApp.Models;
@@ -48,7 +49,7 @@ namespace GestaoInstituto.WebApp.Controllers
 
                 var response = await _mediator.Send(authenticateUserQuery);
 
-                response.Switch(async us => await AuthUser(us), error => Alert(error.MessageError, Enums.NotificationMessageType.error, Enums.NotificationType.toast));
+                response.Switch(async us => await AuthUser(us.User), error => Alert(error, Enums.NotificationMessageType.error, Enums.NotificationType.toast));
 
                 if (_isAuth)
                     return RedirectToAction("Index", "Dashboard");

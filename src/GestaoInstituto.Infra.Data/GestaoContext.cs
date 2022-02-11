@@ -14,6 +14,9 @@ namespace GestaoInstituto.Infra.Data
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new InstitutionMap());
             modelBuilder.ApplyConfiguration(new AdministrationMap());
+            modelBuilder.ApplyConfiguration(new PageMap());
+            modelBuilder.ApplyConfiguration(new UserPageMap());
+            modelBuilder.ApplyConfiguration(new UserAdministrationMap());
         }
 
     }

@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="~/css/adminlte.min.css">
     <link rel="stylesheet" href="~/plugins/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="~/plugins/toast/toastr.css">
+    <link rel="stylesheet" href="~/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="~/plugins/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/plugins/datatables/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables/datatables-buttons/css/buttons.bootstrap4.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
@@ -21,7 +28,7 @@
             <img class="animation__shake" src="~/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" style="display: none;">
         </div>
         @Html.Partial("_Navbar")
-        
+
         @Html.Partial("_Sidebar")
 
         <div class="content-wrapper">
@@ -37,17 +44,80 @@
 
     <script src="~/plugins/jquery/jquery.min.js"></script>
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/adminlte.min.js"></script>
-    <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-    <script src="~/plugins/toast/toastr.min.js"></script>
 
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+
+    <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/plugins/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/plugins/toast/toastr.min.js"></script>
+    <script src="~/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+
+    <script src="~/js/adminlte.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-            @if (TempData["msg"] != null)
+                  @if (TempData["msg"] != null)
         {
             @Html.Raw(TempData["msg"])
         }
+
+                $(function () {
+          $(".tableDataV1").DataTable({
+             "language": {
+                "sProcessing":    "Procesando...",
+                "sLengthMenu":    "Mostrar _MENU_ registros",
+                "sZeroRecords":   "No se encontraron resultados",
+                "sEmptyTable":    "Nenhum registro disponível",
+                "sInfo":          "Mostrando de _START_ à _END_ de _TOTAL_ registros",
+                "sInfoEmpty":     "Mostrando de 0 à 0  de 0 registros",
+                "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":   "",
+                "sSearch":        "Buscar:",
+                "sUrl":           "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "decimal": ",",
+                "thousands": ".",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":    "Último",
+                    "sNext":    "Próxima",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+            },
+            //"dom": 'Blfrtip',
+             dom:"<'row'<'col-sm-12 col-md-12 'B>><'row'>"+ "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                 "<'row'<'col-sm-12'tr>>" +
+                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            //buttons: [
+            //    {
+            //        extend: 'excel',
+            //        text: '<i class="material-icons">save_alt</i> Excel',
+            //        className: 'btn btn-success bottonexport',
+            //        exportOptions: {
+            //            columns: 'th:not(:last-child)'
+            //        }
+            //    }
+            //]
+             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');;
+      });
     </script>
 </body>
 </html>

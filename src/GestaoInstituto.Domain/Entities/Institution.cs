@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace GestaoInstituto.Domain.Entities
@@ -15,8 +13,6 @@ namespace GestaoInstituto.Domain.Entities
         public string Nome { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Campo {0} é obrigatório")]
-        public int Status { get; set; }
 
 
         public virtual DateTime? DataInclusao { get; set; }
