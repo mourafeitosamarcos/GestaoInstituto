@@ -1,83 +1,193 @@
 ﻿@model IEnumerable<GestaoInstituto.Domain.Entities.User>
 
 
-<p>
-    <a asp-action="Cadastro" class="btn btn-outline-primary">Novo Usuário</a>
-</p>
 
-<div class="card card-body">
-    <div class="col-md-12  table-responsive">
-        <table class="table tableDataV1">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Id)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nome)
-                    </th>
+<!-- HEADER -->
+<div class="header">
+    <div class="container-fluid">
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
+        <!-- Body -->
+        <div class="header-body">
+            <div class="row align-items-end">
+                <div class="col">
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.NivelAcesso)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr id="row_@item.Id">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nome)
-                        </td>
+                    <!-- Pretitle -->
+                    <h6 class="header-pretitle">
+                        Cadastro de
+                    </h6>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
+                    <!-- Title -->
+                    <h1 class="header-title">
+                        Usuários
+                    </h1>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NivelAcesso)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </td>
+                </div>
+                <div class="col-auto">
 
-                        <td>
+                    <!-- Button -->
+                    <a asp-action="Cadastro" class="btn btn-primary lift">
+                        Novo Usuário
+                    </a>
 
-                            <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-outline-primary" title="Editar">
-                                <i class="material-icons">
-                                    create
-                                </i>
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .header-body -->
 
-                            </a>
+    </div>
+</div> <!-- / .header -->
 
-                            <a href="#" class="btn btn-outline-danger" title="Editar" onclick="ConfirmaExclusao('@item.Nome', @item.Id)">
-                                <i class="material-icons">
-                                    delete_outline
-                                </i>
+<div class="card">
+    <div class="card-body">
+        <div class="col-md-12  table-responsive">
+            <table class="table table-sm table-hover table-nowrap card-table">
+                <thead>
+                    <tr>
+                        <th>
 
-                            </a>
-                        </td>
+                            <!-- Checkbox -->
+                            <div class="form-check mb-n2">
+                                <input class="form-check-input list-checkbox-all" id="listCheckboxAll" type="checkbox">
+                                <label class="form-check-label" for="listCheckboxAll"></label>
+                            </div>
 
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.NivelAcesso)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.Id">
+                            <td>
+
+                                <!-- Checkbox -->
+                            <div class="form-check">
+                                    <input class="form-check-input list-checkbox" id="listCheckboxOne" type="checkbox">
+                                    <label class="form-check-label" for="listCheckboxOne"></label>
+                                </div>
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NivelAcesso)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-outline-primary" title="Editar">
+                                    <i class="material-icons">
+                                        create
+                                    </i>
+
+                                </a>
+
+                                <a href="#" class="btn btn-outline-danger" title="Editar" onclick="ConfirmaExclusao('@item.Nome', @item.Id)">
+                                    <i class="material-icons">
+                                        delete_outline
+                                    </i>
+
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+
+        <!-- Pagination (prev) -->
+        <ul class="list-pagination-prev pagination pagination-tabs card-pagination">
+            <li class="page-item">
+                <a class="page-link ps-0 pe-4 border-end" href="#">
+                    <i class="fe fe-arrow-left me-1"></i> Prev
+                </a>
+            </li>
+        </ul>
+
+        <!-- Pagination -->
+        <ul class="list-pagination pagination pagination-tabs card-pagination"></ul>
+
+        <!-- Pagination (next) -->
+        <ul class="list-pagination-next pagination pagination-tabs card-pagination">
+            <li class="page-item">
+                <a class="page-link ps-4 pe-0 border-start" href="#">
+                    Next <i class="fe fe-arrow-right ms-1"></i>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Alert -->
+        <div class="list-alert alert alert-dark alert-dismissible border fade" role="alert">
+
+            <!-- Content -->
+            <div class="row align-items-center">
+                <div class="col">
+
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                        <input class="form-check-input" id="listAlertCheckbox" type="checkbox" checked disabled>
+                        <label class="form-check-label text-white" for="listAlertCheckbox">
+                            <span class="list-alert-count">0</span> deal(s)
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-auto me-n3">
+
+                    <!-- Button -->
+                    <button class="btn btn-sm btn-white-20">
+                        Edit
+                    </button>
+
+                    <!-- Button -->
+                    <button class="btn btn-sm btn-white-20">
+                        Delete
+                    </button>
+
+                </div>
+            </div> <!-- / .row -->
+            <!-- Close -->
+            <button type="button" class="list-alert-close btn-close" aria-label="Close"></button>
+
+        </div>
+
     </div>
 </div>
-
 @section Scripts{
-<script> 
+<script>
+
         function ConfirmaExclusao(text, id) {
             Swal.fire({
       title: '',
@@ -89,7 +199,7 @@
     }).then((result) => {
       if (result.isConfirmed) {
             $.get("@Url.Action("Excluir", "Usuario")?id=" + id, function (data) {
-                
+
                  Swal.fire(
                   '',
                   'Registro Excluido com sucesso!',
@@ -104,7 +214,7 @@
                   'success'
                 )
             })
-       
+
       }
     })
             //swal({

@@ -16,6 +16,9 @@ namespace GestaoInstituto.Infra.Data.Mappings
             builder.Property(c => c.Id).ValueGeneratedOnAdd()
                 .HasColumnName("ADM_Id");
 
+            builder.Property(c => c.EmpresaId)
+                 .HasColumnName("ADM_EMP_Id");
+
             builder.Property(c => c.Nome)
                    .HasColumnName("ADM_Nome")
                    .HasMaxLength(150);

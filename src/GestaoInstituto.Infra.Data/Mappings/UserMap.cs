@@ -16,6 +16,9 @@ namespace GestaoInstituto.Infra.Data.Mappings
             builder.Property(c => c.Id).ValueGeneratedOnAdd()
                 .HasColumnName("USUA_Id");
 
+            builder.Property(c => c.EmpresaId)
+                  .HasColumnName("USUA_EMP_Id");
+
             builder.Property(c => c.InstituicaoId)
                    .HasColumnName("USUA_INST_Id");
 

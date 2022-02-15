@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/aminPage/favicon/favicon.ico" type="image/x-icon" />
+
+    <!-- Map CSS -->
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css" />
+
+    <!-- Libs CSS -->
+    <link rel="stylesheet" href="~/aminPage/css/libs.bundle.css" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="~/aminPage/css/theme.bundle.css" />
+
+    <link rel="stylesheet" href="~/Plugins/bootstrap-select/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="~/Plugins/bootstrap-duallistbox/bootstrap-duallistbox.css" />
+
+
+
+    <!-- Title -->
+    <title>Dashkit</title>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <partial name="_NavBar.cshtml" />
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- CARDS -->
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+
+    </div><!-- / .main-content -->
+    <!-- JAVASCRIPT -->
+    
+    <!-- Map JS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+
+    <!-- Vendor JS -->
+    <script src="~/aminPage/js/vendor.bundle.js"></script>
+
+    <!-- Theme JS -->
+    <script src="~/aminPage/js/theme.bundle.js"></script>
+    
+    <script src="~/Plugins/bootstrap-select/js/bootstrap-select.js" ></script>
+    <script src="~/Plugins/sweetalert2@11.js"></script>
+    <script src="~/Plugins/bootstrap-duallistbox/jquery.bootstrap-duallistbox.js"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

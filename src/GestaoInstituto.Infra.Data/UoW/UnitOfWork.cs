@@ -13,12 +13,38 @@ namespace GestaoInstituto.Infra.Data.UoW
             _context = context;
         }
 
-        private IUserRepository _userRepository;
+        private ICompanyRepository _companyRepository;
         private IInstitutionRepository _institutionRepository;
+        private IUserRepository _userRepository;
         private IAdministrationRepository _administrationRepository;
-        private IPageRepository _pageRepository;   
+        private IPageRepository _pageRepository;
         private IUserPageRepository _userPageRepository;
         private IUserAdministrationRepository _userAdministrationRepository;
+
+        public ICompanyRepository CompanyRepository
+        {
+            get
+            {
+                if (_companyRepository == null)
+                {
+                    _companyRepository = new CompanyRepository(_context);
+                }
+
+                return _companyRepository;
+            }
+        }
+        public IInstitutionRepository InstitutionRepository
+        {
+            get
+            {
+                if (_institutionRepository == null)
+                {
+                    _institutionRepository = new InstitutionRepository(_context);
+                }
+
+                return _institutionRepository;
+            }
+        }
 
         public IUserRepository UserRepository
         {
@@ -33,18 +59,6 @@ namespace GestaoInstituto.Infra.Data.UoW
             }
         }
 
-        public IInstitutionRepository InstitutionRepository
-        {
-            get
-            {
-                if (_institutionRepository == null)
-                {
-                    _institutionRepository = new InstitutionRepository(_context);
-                }
-
-                return _institutionRepository;
-            }
-        }
 
         public IAdministrationRepository AdministrationRepository
         {

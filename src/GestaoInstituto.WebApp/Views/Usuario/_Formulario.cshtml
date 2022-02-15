@@ -1,15 +1,36 @@
 ﻿@model GestaoInstituto.Domain.Entities.User
 
+<!-- HEADER -->
+<div class="header">
+    <div class="container-fluid">
+
+        <!-- Body -->
+        <div class="header-body">
+            <div class="row align-items-end">
+                <div class="col">
+
+                    <!-- Pretitle -->
+                    <h6 class="header-pretitle">
+                        Cadastro de
+                    </h6>
+
+                    <!-- Title -->
+                    <h1 class="header-title">
+                        Usuários
+                    </h1>
+
+                </div>
+                <div class="col-auto">
+
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .header-body -->
+
+    </div>
+</div> <!-- / .header -->
 
 <input id="hdfId" type="hidden" asp-for="Id" />
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<div class="form-row">
-    <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
-        <h4>Usuario</h4>
-        <hr />
-    </div>
-</div>
-
 
 <div class="form-row">
     <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -65,7 +86,7 @@
 <div class="form-row">
     <div class="form-group">
         <input id="btnSalvar" type="submit" value="Salvar" class="btn btn-outline-primary" />
-        <button type="button" id="btnLiberarAcesso" class="btn btn-outline-warning" data-toggle="modal" data-target="#acessos">
+        <button type="button" id="btnLiberarAcesso" class="btn btn-outline-warning">
             Liberar Acessos
         </button>
         <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>

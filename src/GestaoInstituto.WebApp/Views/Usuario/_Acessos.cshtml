@@ -3,25 +3,23 @@
 <div class="modal fade bd-example-modal-lg" id="acessos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="card-header">
+    
+              <!-- Title -->
+              <h4 class="card-header-title" id="exampleModalCenterTitle">
+                Add a member
+              </h4>
+    
+              <!-- Close -->
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    
             </div>
             <div class="modal-body">
                 <div class="">
                     <div class="form-row">
-                        <div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12">
                             <label class="control-label">Administração</label>
-                            <select id="ddlAdministracao" class="selectpicker col-md-12 form-control" asp-for="AdministracaoIds"
-                                    multiple title="Selecione um ou mais..."
-                                    data-dropup-auto="false"
-                                    data-live-search="true"
-                                    data-selected-text-format="count > 50"
-                                    data-size="15"
-                                    data-actions-box="true"
-                                    asp-items="ViewBag.Administations"></select>
+                             <select id="ddlAdministracao" class="form-control" asp-for="AdministracaoIds" asp-items="ViewBag.Administations" multiple data-live-search="true"></select>
                         </div>
                     </div>
                     <div id="divProdutos" class="card card-body">
@@ -39,7 +37,7 @@
             </div>
             <div class="modal-footer">
                 <div id="divBotoes">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                    <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" aria-label="Close">Sair</button>
                     <button type="button" id="btnGravaAcessos" class="btn btn-primary">Gravar</button>
                 </div>
                 <h3 id="lblLoad" style="display:none"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Aguarde...</h3>

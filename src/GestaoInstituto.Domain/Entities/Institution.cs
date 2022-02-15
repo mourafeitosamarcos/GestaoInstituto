@@ -8,7 +8,7 @@ namespace GestaoInstituto.Domain.Entities
 {
     public class Institution : BaseEntity
     {
-        public virtual int AdministracaoId { get; set; }
+        public virtual int? AdministracaoId { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]
         public string Nome { get; set; }
         [Required(ErrorMessage = "Campo {0} é obrigatório")]

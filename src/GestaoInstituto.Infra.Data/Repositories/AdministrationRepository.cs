@@ -3,7 +3,7 @@ using GestaoInstituto.Domain.Interfaces.Repositories;
 
 namespace GestaoInstituto.Infra.Data.Repositories
 {
-    internal class AdministrationRepository : BaseRepository<Administration, int>, IAdministrationRepository
+    public class AdministrationRepository : BaseRepository<Administration, int>, IAdministrationRepository
     {
         private readonly GestaoContext _context;
 

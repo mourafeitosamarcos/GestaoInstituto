@@ -8,23 +8,21 @@
         color: red
     }
 </style>
-<div class="card card-body">
 
-    <form asp-action="Editar" method="post">
-        <partial name="_Formulario.cshtml" />
-    </form>
+<form asp-action="Editar" method="post">
 
-</div>
+   
+    <partial name="_Formulario.cshtml" />
+</form>
+
 
 @section Scripts{
 <script>
 
       $(function () {
-          $( "#acessos" ).on('shown', function(){
-              $("#lblLoad").hide();
-              $("#divBotoes").show();
-        });
-           $('#btnGravaAcessos').on("click", function () {
+          $("#btnLiberarAcesso").on("click", function () {
+               $('#acessos').modal('toggle');
+               $('#btnGravaAcessos').on("click", function () {
                $("#lblLoad").show();
                $("#divBotoes").hide();
                 let paginaIds = []
@@ -53,7 +51,7 @@
                     success: function () {
                         $('#acessos').modal('toggle');
                        $("#lblLoad").hide();
-              $("#divBotoes").show();
+           $("#divBotoes").show();
                         Swal.fire("", "Registro Salvo com sucesso!", "success");
 
                         //setInterval(function () {
@@ -86,6 +84,15 @@
                 filterPlaceHolder: 'Digite o nome da Páginas',
                 infoTextEmpty: 'Nenhuma Páginas encontrada'
             });
+          });
+
+          $("#acessos").on('shown', function(){
+
+
+              //$("#lblLoad").hide();
+              //$("#divBotoes").show();
+        });
+
     })
 </script>
 }

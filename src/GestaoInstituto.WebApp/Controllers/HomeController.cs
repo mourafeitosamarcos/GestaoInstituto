@@ -28,14 +28,25 @@ namespace GestaoInstituto.WebApp.Controllers
             _mediator = mediator;
         }
 
+        [Route("/Login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [Route("/Registrar")]
+        public IActionResult Registrar()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> Index([Bind] string email, string senha)
+        public async Task<IActionResult> Logar([Bind] string email, string senha)
         {
 
             if (ModelState.IsValid)
@@ -76,7 +87,6 @@ namespace GestaoInstituto.WebApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
 
         private async Task AuthUser(User usuario)
         {

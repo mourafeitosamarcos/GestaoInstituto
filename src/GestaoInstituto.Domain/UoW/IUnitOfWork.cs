@@ -6,8 +6,9 @@ namespace GestaoInstituto.Domain.UoW
 {
     public interface IUnitOfWork
     {
-        IUserRepository UserRepository { get; }
+        ICompanyRepository CompanyRepository { get; }
         IInstitutionRepository InstitutionRepository { get; }
+        IUserRepository UserRepository { get; }
         IAdministrationRepository AdministrationRepository { get; }
         IPageRepository PageRepository { get; }
         IUserPageRepository UserPageRepository { get; }
